@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:the_ultimate_todo/business_logic/cubits/login/cubit/login_cubit.dart';
 
 bool _rememberme = false;
 
@@ -18,8 +20,8 @@ class _LoginRectangleState extends State<LoginRectangle> {
     return Container(
         padding: EdgeInsets.only(top: 1),
         margin: EdgeInsets.only(left: 15, right: 15, top: 100, bottom: 20),
-        height: 685,
-        width: 670,
+        height: 635,
+        width: 645,
         child: CustomPaint(
           painter: RectangleBox(),
           child: Column(
@@ -57,8 +59,8 @@ class _LoginRectangleState extends State<LoginRectangle> {
                   children: [
                     GestureDetector(
                       child: Container(
-                          height: 45,
-                          width: 45,
+                          height: 35,
+                          width: 5,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.grey[900],
@@ -75,9 +77,11 @@ class _LoginRectangleState extends State<LoginRectangle> {
                           )),
                     ),
                     GestureDetector(
+                      onTap: () =>
+                          context.read<LoginCubit>().signInWithGoogle(),
                       child: Container(
-                          height: 45,
-                          width: 45,
+                          height: 35,
+                          width: 35,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.grey[300],
@@ -139,19 +143,26 @@ class EmailWidget extends StatelessWidget {
               ),
             ],
           ),
-          child: TextField(
-            keyboardType: TextInputType.emailAddress,
-            style: TextStyle(color: Colors.white),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(
-                Icons.email,
-                color: Colors.deepPurpleAccent,
-              ),
-              hintText: 'Enter your Email',
-              hintStyle: TextStyle(color: Colors.white54),
-            ),
+          child: BlocBuilder<LoginCubit, LoginState>(
+            buildWhen: (previous, current) => previous.email != current.email,
+            builder: (context, state) {
+              return TextField(
+                onChanged: (email) =>
+                    context.read<LoginCubit>().emailChanged(email),
+                keyboardType: TextInputType.emailAddress,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top: 14.0),
+                  prefixIcon: Icon(
+                    Icons.email,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  hintText: 'Enter your Email',
+                  hintStyle: TextStyle(color: Colors.white54),
+                ),
+              );
+            },
           ),
         )),
       ],
@@ -194,20 +205,26 @@ class PasswordWidget extends StatelessWidget {
               ),
             ],
           ),
-          child: TextField(
-            keyboardType: TextInputType.emailAddress,
-            obscureText: true,
-            style: TextStyle(color: Colors.white),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(
-                Icons.lock,
-                color: Colors.deepPurpleAccent,
-              ),
-              hintText: 'Enter your Password',
-              hintStyle: TextStyle(color: Colors.white54),
-            ),
+          child: BlocBuilder<LoginCubit, LoginState>(
+            builder: (context, state) {
+              return TextField(
+                onChanged: (password) =>
+                    context.read<LoginCubit>().passwordChanged(password),
+                keyboardType: TextInputType.text,
+                obscureText: true,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top: 14.0),
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  hintText: 'Enter your Password',
+                  hintStyle: TextStyle(color: Colors.white54),
+                ),
+              );
+            },
           ),
         )),
       ],
@@ -317,21 +334,28 @@ class LoginButton extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: 210,
       height: 100,
-      child: RaisedButton(
-        padding: EdgeInsets.all(15.0),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-        onPressed: () => print("Login Button"),
-        color: Colors.blueGrey[900],
-        child: Text(
-          "LOGIN",
-          style: TextStyle(
-            color: Colors.white,
-            letterSpacing: 1.5,
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-          ),
-        ),
+      child: BlocBuilder<LoginCubit, LoginState>(
+        buildWhen: (previous, current) => previous.status != current.status,
+        builder: (context, state) {
+          return RaisedButton(
+            onLongPress: () =>
+                context.read<LoginCubit>().logInWithCredentials(),
+            padding: EdgeInsets.all(15.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0)),
+            onPressed: () => print("Login Button"),
+            color: Colors.blueGrey[900],
+            child: Text(
+              "LOGIN",
+              style: TextStyle(
+                color: Colors.white,
+                letterSpacing: 1.5,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
