@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:the_ultimate_todo/business_logic/cubits/login/cubit/login_cubit.dart';
-import 'package:the_ultimate_todo/presentation/widgets/loginrectangle.dart';
+import 'package:the_ultimate_todo/business_logic/cubits/login/cubit/sign_up/cubit/sign_up_cubit.dart';
+import 'package:the_ultimate_todo/presentation/widgets/signup_widget.dart';
 
-class LoginScreen extends StatelessWidget {
+class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginCubit(),
-      child: BlocConsumer<LoginCubit, LoginState>(
+      create: (context) => SignUpCubit(),
+      child: BlocConsumer<SignUpCubit, SignUpState>(
         listener: (context, state) {
           if (state.status.isSubmissionFailure) {
             print('submission failure');
@@ -34,7 +34,7 @@ class LoginScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        child: LoginRectangle(),
+                        child: SignUpWidget(),
                         alignment: Alignment.center,
                       ),
                     ],

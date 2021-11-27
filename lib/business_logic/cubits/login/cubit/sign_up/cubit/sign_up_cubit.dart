@@ -36,13 +36,15 @@ class SignUpCubit extends Cubit<SignUpState> {
   }
 
   Future<void> signUpWithCredentials() async {
-    if (!state.status.isValidated) return;
-    emit(state.copyWith(status: FormzStatus.submissionInProgress));
+    // if (!state.status.isValidated) return;
+    // emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
-      final FirebaseAuth = await _auth.createUserWithEmailAndPassword(
+      final FirebaseAuth = await Future.delayed(Duration(milliseconds: 500));
+      _auth.createUserWithEmailAndPassword(
           email: state.email.value, password: state.password.value);
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on FirebaseAuthException catch (e) {
+      print(e.message);
       emit(state.copyWith(
           status: FormzStatus.submissionFailure, exceptionError: e.message));
     }
