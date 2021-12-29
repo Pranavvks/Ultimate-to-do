@@ -7,8 +7,8 @@ import 'package:firebase_auth_oauth/firebase_auth_oauth.dart';
 import 'package:flutter/services.dart';
 import 'package:formz/formz.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:the_ultimate_todo/data/models/authentication/email.dart';
-import 'package:the_ultimate_todo/data/models/authentication/password.dart';
+import 'package:the_ultimate_todo/services/models/authentication/email.dart';
+import 'package:the_ultimate_todo/services/models/authentication/password.dart';
 
 part 'login_state.dart';
 

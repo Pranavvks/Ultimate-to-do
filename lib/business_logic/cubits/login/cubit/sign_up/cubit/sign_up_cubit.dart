@@ -2,9 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:formz/formz.dart';
-import 'package:the_ultimate_todo/data/models/authentication/email.dart';
-import 'package:the_ultimate_todo/data/models/authentication/name.dart';
-import 'package:the_ultimate_todo/data/models/authentication/password.dart';
+import 'package:the_ultimate_todo/services/models/authentication/email.dart';
+import 'package:the_ultimate_todo/services/models/authentication/name.dart';
+import 'package:the_ultimate_todo/services/models/authentication/password.dart';
 
 part 'sign_up_state.dart';
 
