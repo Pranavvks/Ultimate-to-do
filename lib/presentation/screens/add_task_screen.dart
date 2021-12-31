@@ -1,7 +1,175 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
-class AddTasksScreen extends StatelessWidget {
+import 'package:the_ultimate_todo/presentation/widgets/custom_bottom_sheet.dart';
+
+class BuildListItem extends StatefulWidget {
+  BuildContext context;
+  late Widget title;
+  late Widget leading;
+  late Widget trailing;
+  BuildListItem({
+    Key? key,
+    required this.context,
+    required this.title,
+    required this.leading,
+    required this.trailing,
+  }) : super(key: key);
+
+  @override
+  _BuildListItemState createState() => _BuildListItemState();
+}
+
+class _BuildListItemState extends State<BuildListItem> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 24.0,
+        vertical: 16.0,
+      ),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.grey,
+            width: 0.5,
+          ),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          if (widget.leading != Null) widget.leading,
+          if (widget.title != Null)
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+              ),
+              child: DefaultTextStyle(
+                child: widget.title,
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+              ),
+            ),
+          Spacer(),
+          if (widget.trailing != Null) widget.trailing,
+        ],
+      ),
+    );
+  }
+}
+
+// Widget _buildListItem(
+//   BuildContext context, {
+//   required Widget title,
+//   required Widget leading,
+//   required Widget trailing,
+// }) {
+//   final theme = Theme.of(context);
+// }
+
+class AddTasksScreen extends StatefulWidget {
   const AddTasksScreen({Key? key}) : super(key: key);
+
+  @override
+  State<AddTasksScreen> createState() => _AddTasksScreenState();
+}
+
+class _AddTasksScreenState extends State<AddTasksScreen> {
+  void _handleFABPressed(BuildContext context) {
+    showModalBottomSheet<int>(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        bool isOn = false;
+        return Popover(
+          child: Column(
+            children: [
+              BuildListItem(
+                context: context,
+                title: Text(
+                  'Business',
+                  style: TextStyle(color: Colors.black),
+                ),
+                leading: Icon(Icons.check_circle_outline),
+                trailing: Switch(
+                  value: isOn,
+                  onChanged: (isOn) {
+                    setState(() {
+                      !isOn;
+                    });
+                  },
+                ),
+              ),
+              BuildListItem(
+                context: context,
+                title: Text(
+                  'Study',
+                  style: TextStyle(color: Colors.black),
+                ),
+                leading: Icon(Icons.inbox),
+                trailing: Switch(
+                  value: false,
+                  onChanged: (value) {
+                    setState(() {
+                      value = !value;
+                    });
+                  },
+                ),
+              ),
+              BuildListItem(
+                context: context,
+                title: Text(
+                  'Personal',
+                  style: TextStyle(color: Colors.black),
+                ),
+                leading: Icon(Icons.check_circle),
+                trailing: Switch(
+                  value: false,
+                  onChanged: (value) {
+                    setState(() {
+                      value = !value;
+                    });
+                  },
+                ),
+              ),
+              BuildListItem(
+                context: context,
+                title: Text(
+                  'Fitness',
+                  style: TextStyle(color: Colors.black),
+                ),
+                leading: Icon(Icons.flag),
+                trailing: Switch(
+                  value: false,
+                  onChanged: (value) {
+                    setState(() {
+                      value = !value;
+                    });
+                  },
+                ),
+              ),
+              BuildListItem(
+                context: context,
+                title: Text(
+                  'No list',
+                  style: TextStyle(color: Colors.black),
+                ),
+                leading: Icon(Icons.flag),
+                trailing: Switch(
+                  value: false,
+                  onChanged: (value) {
+                    setState(() {
+                      value = !value;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,25 +190,13 @@ class AddTasksScreen extends StatelessWidget {
                       color: Colors.white),
                 ),
               ),
-              // Container(
-              //   child: Icon(Icons.arrow_circle_up),
-              //   margin: EdgeInsets.all(12),
-              // ),
             ],
           ),
-          // margin: EdgeInsets.only(top: 84, bottom: 84, right: 18, left: 84),
           height: 60,
           width: 220,
           decoration: BoxDecoration(
             color: Colors.pinkAccent,
             borderRadius: BorderRadius.circular(20.0),
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Colors.black12,
-            //     blurRadius: 6.0,
-            //     offset: Offset(4, 4),
-            //   ),
-            // ],
           ),
         ),
       ),
@@ -64,177 +220,95 @@ class AddTasksScreen extends StatelessWidget {
                     fontSize: 22,
                     fontWeight: FontWeight.w600),
               )),
-          // CategoriesDropDownButton(),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.end,
-          //   children: [
-          //     Text(
-          //       "Hi",
-          //       style: TextStyle(
-          //           color: Colors.white70,
-          //           fontSize: 22,
-          //           fontWeight: FontWeight.w600),
-          //     )
-          //   ],
-          // )
-          // Column(
-          //   // mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //   children: [
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: Colors.black, // border color
-                    shape: BoxShape.circle,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(4),
-                    child: Container(
-                        decoration: BoxDecoration(
+          GestureDetector(
+            onTap: () => {_handleFABPressed(context)},
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: Colors.black, // border color
                       shape: BoxShape.circle,
-                      color: Colors.orange,
-                    )),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(4),
+                      child: Container(
+                          decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.orange,
+                      )),
+                    ),
+                    margin: EdgeInsets.only(left: 130, bottom: 10),
                   ),
-                  margin: EdgeInsets.only(left: 130, bottom: 10),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 0, right: 20, bottom: 22),
-                  height: 51,
-                  width: 130,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        child: Row(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 27),
-                              child: Text(
-                                "Today",
-                                style: TextStyle(
+                  Container(
+                    margin: EdgeInsets.only(top: 0, right: 20, bottom: 22),
+                    height: 51,
+                    width: 130,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        _selectdatetime(context);
+                      },
+                      child: Column(
+                        children: [
+                          Container(
+                            child: Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(left: 27),
+                                  child: Text(
+                                    "Today",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                                Container(
+                                  child: Icon(
+                                    Icons.calendar_today,
                                     color: Colors.black,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w700),
-                              ),
+                                  ),
+                                  margin: EdgeInsets.only(left: 8),
+                                ),
+                              ],
                             ),
-                            Container(
-                              child: Icon(
-                                Icons.calendar_today,
-                                color: Colors.black,
-                              ),
-                              margin: EdgeInsets.only(left: 8),
-                            ),
-                          ],
-                        ),
-                        margin: EdgeInsets.only(top: 20),
+                            margin: EdgeInsets.only(top: 20),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.end,
-          //   children: [],
-          // ),
-
-          // Row(
-          //   children: [
-          //     Container(
-          //       child: Text("Hi"),
-          //       margin: EdgeInsets.all(90.0),
-          //     ),
-          //   ],
         ],
       ),
     );
   }
-}
 
-class CategoriesDropDownButton extends StatefulWidget {
-  const CategoriesDropDownButton({Key? key}) : super(key: key);
+  void _selectdatetime(BuildContext context) async {
+    final DateTime? picked = await DatePicker.showDateTimePicker(
+      context,
+      showTitleActions: true,
+    );
+    if (picked != Null) {
+      final data = picked.toString();
+      // print(date);
+      final regex = RegExp(
+          r'^([0-9]{4}-[0-9]{2}-[0-9]{2})(\s)([0-9]{2}:[0-9]{2})(.*)$',
+          caseSensitive: false);
 
-  @override
-  _CategoriesDropDownButtonState createState() =>
-      _CategoriesDropDownButtonState();
-}
-
-class _CategoriesDropDownButtonState extends State<CategoriesDropDownButton> {
-  @override
-  String dropdownValue = 'No list';
-  Widget build(BuildContext context) {
-    return DropdownButton<String>(
-        value: dropdownValue,
-        onChanged: (String? newValue) {
-          setState(() {
-            dropdownValue = newValue!;
-          });
-        },
-        items: <String>[
-          'Business',
-          'Personal',
-          'Academics',
-          'Fitness',
-          'No list'
-        ].map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList());
+      final match = regex.firstMatch(data);
+      final date = print(match!.group(1));
+      final time = print(match.group(3));
+    }
   }
 }
-
-class TimePicker extends StatefulWidget {
-  const TimePicker({Key? key}) : super(key: key);
-
-  @override
-  _TimePickerState createState() => _TimePickerState();
-}
-
-class _TimePickerState extends State<TimePicker> {
-  Widget build(BuildContext context) {
-    return TextButton(
-        child: Container(
-            height: 25,
-            width: 25,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.grey[900],
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black26,
-                  offset: Offset(0, 2),
-                  blurRadius: 6.0,
-                ),
-              ],
-            )),
-        onPressed: () {
-          TimeOfDay initialTime = TimeOfDay.now();
-          var pickedTime = showTimePicker(
-            context: context,
-            initialTime: initialTime,
-            builder: (BuildContext context, Widget? child) {
-              return Directionality(
-                  textDirection: TextDirection.rtl, child: child!);
-            },
-          );
-        });
-  }
-}
-/*
- height: 60,
-          width: 220,
-          decoration: BoxDecoration(
-            color: Colors.pinkAccent,
-            borderRadius: BorderRadius.circular(20.0),*
-*/
