@@ -12,7 +12,6 @@ class Popover extends StatefulWidget {
 class _PopoverState extends State<Popover> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.all(16.0),
       clipBehavior: Clip.antiAlias,
@@ -32,8 +31,6 @@ class _PopoverState extends State<Popover> {
 }
 
 Widget _buildHandle(BuildContext context) {
-  final theme = Theme.of(context);
-
   return FractionallySizedBox(
     widthFactor: 0.25,
     child: Container(
@@ -43,7 +40,7 @@ Widget _buildHandle(BuildContext context) {
       child: Container(
         height: 5.0,
         decoration: BoxDecoration(
-          color: theme.dividerColor,
+          color: Colors.grey,
           borderRadius: const BorderRadius.all(Radius.circular(2.5)),
         ),
       ),

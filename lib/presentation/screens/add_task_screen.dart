@@ -80,7 +80,10 @@ class _AddTasksScreenState extends State<AddTasksScreen> {
       backgroundColor: Colors.transparent,
       context: context,
       builder: (context) {
-        bool isOn = false;
+        bool isOn_one = false;
+        bool isOn_two = false;
+        bool isOn_three = false;
+        bool isOn_four = false;
         return Popover(
           child: Column(
             children: [
@@ -92,10 +95,11 @@ class _AddTasksScreenState extends State<AddTasksScreen> {
                 ),
                 leading: Icon(Icons.check_circle_outline),
                 trailing: Switch(
-                  value: isOn,
-                  onChanged: (isOn) {
+                  value: isOn_one,
+                  onChanged: (value) {
                     setState(() {
-                      !isOn;
+                      isOn_one = !isOn_one;
+                      print("negated => $isOn_one");
                     });
                   },
                 ),
