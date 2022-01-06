@@ -7,12 +7,11 @@ part 'categories.g.dart';
 class Categories {
   int id;
   String category_name;
-  List<Tasks> task_list;
+  // for displaying all the tasks
 
   Categories({
     required this.id,
     required this.category_name,
-    required this.task_list,
   });
 
   factory Categories.fromJson(Map<String, dynamic> json) =>
@@ -21,9 +20,24 @@ class Categories {
 }
 
 List<Categories> categories = [
-  Categories(id: 1, category_name: "Business", task_list: []),
-  Categories(id: 2, category_name: "Academics", task_list: []),
-  Categories(id: 3, category_name: "Personal", task_list: []),
-  Categories(id: 4, category_name: "Fitness", task_list: []),
-  Categories(id: 5, category_name: "No category", task_list: []),
+  Categories(
+    id: 1,
+    category_name: "Business",
+  ),
+  Categories(
+    id: 2,
+    category_name: "Academics",
+  ),
+  Categories(
+    id: 3,
+    category_name: "Personal",
+  ),
+  Categories(
+    id: 4,
+    category_name: "Fitness",
+  ),
+  Categories(
+    id: 5,
+    category_name: "No category",
+  ),
 ];
