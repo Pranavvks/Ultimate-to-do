@@ -2,61 +2,62 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 import 'package:the_ultimate_todo/presentation/widgets/custom_bottom_sheet.dart';
+import 'package:the_ultimate_todo/presentation/widgets/custom_category_buttons.dart';
 
-class BuildListItem extends StatefulWidget {
-  BuildContext context;
-  late Widget title;
-  late Widget leading;
-  late Widget trailing;
-  BuildListItem({
-    Key? key,
-    required this.context,
-    required this.title,
-    required this.leading,
-    required this.trailing,
-  }) : super(key: key);
+// class BuildListItem extends StatefulWidget {
+//   BuildContext context;
+//   late Widget title;
+//   late Widget leading;
+//   late Widget trailing;
+//   BuildListItem({
+//     Key? key,
+//     required this.context,
+//     required this.title,
+//     required this.leading,
+//     required this.trailing,
+//   }) : super(key: key);
 
-  @override
-  _BuildListItemState createState() => _BuildListItemState();
-}
+//   @override
+//   _BuildListItemState createState() => _BuildListItemState();
+// }
 
-class _BuildListItemState extends State<BuildListItem> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 24.0,
-        vertical: 16.0,
-      ),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey,
-            width: 0.5,
-          ),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          if (widget.leading != Null) widget.leading,
-          if (widget.title != Null)
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-              ),
-              child: DefaultTextStyle(
-                child: widget.title,
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-              ),
-            ),
-          Spacer(),
-          if (widget.trailing != Null) widget.trailing,
-        ],
-      ),
-    );
-  }
-}
+// class _BuildListItemState extends State<BuildListItem> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: EdgeInsets.symmetric(
+//         horizontal: 24.0,
+//         vertical: 16.0,
+//       ),
+//       decoration: BoxDecoration(
+//         border: Border(
+//           bottom: BorderSide(
+//             color: Colors.grey,
+//             width: 0.5,
+//           ),
+//         ),
+//       ),
+//       child: Row(
+//         mainAxisSize: MainAxisSize.max,
+//         children: [
+//           if (widget.leading != Null) widget.leading,
+//           if (widget.title != Null)
+//             Padding(
+//               padding: const EdgeInsets.symmetric(
+//                 horizontal: 16.0,
+//               ),
+//               child: DefaultTextStyle(
+//                 child: widget.title,
+//                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+//               ),
+//             ),
+//           Spacer(),
+//           if (widget.trailing != Null) widget.trailing,
+//         ],
+//       ),
+//     );
+//   }
+//}
 
 // Widget _buildListItem(
 //   BuildContext context, {
@@ -84,93 +85,7 @@ class _AddTasksScreenState extends State<AddTasksScreen> {
         bool isOn_two = false;
         bool isOn_three = false;
         bool isOn_four = false;
-        return Popover(
-          child: Column(
-            children: [
-              BuildListItem(
-                context: context,
-                title: Text(
-                  'Business',
-                  style: TextStyle(color: Colors.black),
-                ),
-                leading: Icon(Icons.check_circle_outline),
-                trailing: Switch(
-                  value: isOn_one,
-                  onChanged: (value) {
-                    setState(() {
-                      isOn_one = !isOn_one;
-                      print("negated => $isOn_one");
-                    });
-                  },
-                ),
-              ),
-              BuildListItem(
-                context: context,
-                title: Text(
-                  'Study',
-                  style: TextStyle(color: Colors.black),
-                ),
-                leading: Icon(Icons.inbox),
-                trailing: Switch(
-                  value: false,
-                  onChanged: (value) {
-                    setState(() {
-                      value = !value;
-                    });
-                  },
-                ),
-              ),
-              BuildListItem(
-                context: context,
-                title: Text(
-                  'Personal',
-                  style: TextStyle(color: Colors.black),
-                ),
-                leading: Icon(Icons.check_circle),
-                trailing: Switch(
-                  value: false,
-                  onChanged: (value) {
-                    setState(() {
-                      value = !value;
-                    });
-                  },
-                ),
-              ),
-              BuildListItem(
-                context: context,
-                title: Text(
-                  'Fitness',
-                  style: TextStyle(color: Colors.black),
-                ),
-                leading: Icon(Icons.flag),
-                trailing: Switch(
-                  value: false,
-                  onChanged: (value) {
-                    setState(() {
-                      value = !value;
-                    });
-                  },
-                ),
-              ),
-              BuildListItem(
-                context: context,
-                title: Text(
-                  'No list',
-                  style: TextStyle(color: Colors.black),
-                ),
-                leading: Icon(Icons.flag),
-                trailing: Switch(
-                  value: false,
-                  onChanged: (value) {
-                    setState(() {
-                      value = !value;
-                    });
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
+        return Popover(child: CustomCategoryButton());
       },
     );
   }

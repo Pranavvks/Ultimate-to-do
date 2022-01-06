@@ -12,130 +12,128 @@ class CustomCategoryButton extends StatefulWidget {
 class _CustomCategoryButtonState extends State<CustomCategoryButton> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            children: [
-              Container(
-                  margin: EdgeInsets.all(10),
-                  child: CustomPaint(
-                    size: Size(19, 19),
-                    painter: CategoryButtonPainter(color: Colors.orange),
-                  )),
-              Container(
-                margin: EdgeInsets.all(20),
-                child: Text(
-                  "Business",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                      fontSize: 17),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          children: [
+            Container(
+                margin: EdgeInsets.all(10),
+                child: CustomPaint(
+                  size: Size(19, 19),
+                  painter: CategoryButtonPainter(color: Colors.orange),
+                )),
+            Container(
+              margin: EdgeInsets.all(20),
+              child: Text(
+                "Business",
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                    fontSize: 17),
+              ),
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                    margin: EdgeInsets.all(10),
+                    child: CustomPaint(
+                      size: Size(19, 19),
+                      painter: CategoryButtonPainter(
+                        color: Colors.green,
+                      ),
+                    )),
+                Container(
+                  margin: EdgeInsets.all(20),
+                  child: Text(
+                    "Personal",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 17),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                      margin: EdgeInsets.all(10),
-                      child: CustomPaint(
-                        size: Size(19, 19),
-                        painter: CategoryButtonPainter(
-                          color: Colors.green,
-                        ),
-                      )),
-                  Container(
-                    margin: EdgeInsets.all(20),
-                    child: Text(
-                      "Personal",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                          fontSize: 17),
-                    ),
+              ],
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                    margin: EdgeInsets.all(10),
+                    child: CustomPaint(
+                      size: Size(19, 19),
+                      painter: CategoryButtonPainter(color: Colors.black),
+                    )),
+                Container(
+                  margin: EdgeInsets.all(20),
+                  child: Text(
+                    "Study",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 17),
                   ),
-                ],
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                      margin: EdgeInsets.all(10),
-                      child: CustomPaint(
-                        size: Size(19, 19),
-                        painter: CategoryButtonPainter(color: Colors.black),
-                      )),
-                  Container(
-                    margin: EdgeInsets.all(20),
-                    child: Text(
-                      "Study",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                          fontSize: 17),
-                    ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                    margin: EdgeInsets.all(10),
+                    child: CustomPaint(
+                      size: Size(19, 19),
+                      painter: CategoryButtonPainter(color: Colors.purple),
+                    )),
+                Container(
+                  margin: EdgeInsets.all(20),
+                  child: Text(
+                    "Fitness",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 17),
                   ),
-                ],
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                      margin: EdgeInsets.all(10),
-                      child: CustomPaint(
-                        size: Size(19, 19),
-                        painter: CategoryButtonPainter(color: Colors.purple),
-                      )),
-                  Container(
-                    margin: EdgeInsets.all(20),
-                    child: Text(
-                      "Fitness",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                          fontSize: 17),
-                    ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                    margin: EdgeInsets.all(10),
+                    child: CustomPaint(
+                      size: Size(19, 19),
+                      painter: CategoryButtonPainter(color: Colors.redAccent),
+                    )),
+                Container(
+                  margin: EdgeInsets.all(20),
+                  child: Text(
+                    "Other List",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                        fontSize: 17),
                   ),
-                ],
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                      margin: EdgeInsets.all(10),
-                      child: CustomPaint(
-                        size: Size(19, 19),
-                        painter: CategoryButtonPainter(color: Colors.redAccent),
-                      )),
-                  Container(
-                    margin: EdgeInsets.all(20),
-                    child: Text(
-                      "Other List",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                          fontSize: 17),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

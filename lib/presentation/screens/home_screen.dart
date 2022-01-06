@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:the_ultimate_todo/presentation/screens/add_task_screen.dart';
-import 'package:the_ultimate_todo/presentation/widgets/custom_category_buttons.dart';
+// import 'package:the_ultimate_todo/presentation/widgets/custom_category_buttons.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => CustomCategoryButton()));
+              MaterialPageRoute(builder: (context) => AddTasksScreen()));
         },
         backgroundColor: Colors.pink,
         child: const Icon(Icons.add),
