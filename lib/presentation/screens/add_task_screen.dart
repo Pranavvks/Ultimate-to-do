@@ -4,70 +4,6 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:the_ultimate_todo/presentation/widgets/custom_bottom_sheet.dart';
 import 'package:the_ultimate_todo/presentation/widgets/custom_category_buttons.dart';
 
-// class BuildListItem extends StatefulWidget {
-//   BuildContext context;
-//   late Widget title;
-//   late Widget leading;
-//   late Widget trailing;
-//   BuildListItem({
-//     Key? key,
-//     required this.context,
-//     required this.title,
-//     required this.leading,
-//     required this.trailing,
-//   }) : super(key: key);
-
-//   @override
-//   _BuildListItemState createState() => _BuildListItemState();
-// }
-
-// class _BuildListItemState extends State<BuildListItem> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: EdgeInsets.symmetric(
-//         horizontal: 24.0,
-//         vertical: 16.0,
-//       ),
-//       decoration: BoxDecoration(
-//         border: Border(
-//           bottom: BorderSide(
-//             color: Colors.grey,
-//             width: 0.5,
-//           ),
-//         ),
-//       ),
-//       child: Row(
-//         mainAxisSize: MainAxisSize.max,
-//         children: [
-//           if (widget.leading != Null) widget.leading,
-//           if (widget.title != Null)
-//             Padding(
-//               padding: const EdgeInsets.symmetric(
-//                 horizontal: 16.0,
-//               ),
-//               child: DefaultTextStyle(
-//                 child: widget.title,
-//                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-//               ),
-//             ),
-//           Spacer(),
-//           if (widget.trailing != Null) widget.trailing,
-//         ],
-//       ),
-//     );
-//   }
-//}
-
-// Widget _buildListItem(
-//   BuildContext context, {
-//   required Widget title,
-//   required Widget leading,
-//   required Widget trailing,
-// }) {
-//   final theme = Theme.of(context);
-// }
-
 class AddTasksScreen extends StatefulWidget {
   const AddTasksScreen({Key? key}) : super(key: key);
 
@@ -76,15 +12,19 @@ class AddTasksScreen extends StatefulWidget {
 }
 
 class _AddTasksScreenState extends State<AddTasksScreen> {
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
+  }
+
   void _handleFABPressed(BuildContext context) {
     showModalBottomSheet<int>(
       backgroundColor: Colors.transparent,
       context: context,
       builder: (context) {
-        bool isOn_one = false;
-        bool isOn_two = false;
-        bool isOn_three = false;
-        bool isOn_four = false;
         return Popover(child: CustomCategoryButton());
       },
     );
@@ -126,6 +66,8 @@ class _AddTasksScreenState extends State<AddTasksScreen> {
               alignment: Alignment.center,
               margin: EdgeInsets.only(top: 36, left: 105),
               child: TextField(
+                controller: myController,
+                onSubmitted: (value) => print(value),
                 decoration: InputDecoration(
                   hintStyle: TextStyle(
                       color: Color.fromRGBO(187, 196, 217, 1),

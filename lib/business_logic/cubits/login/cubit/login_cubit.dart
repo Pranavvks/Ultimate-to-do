@@ -44,6 +44,7 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       await _auth.signInWithEmailAndPassword(
           email: state.email.value, password: state.password.value);
+      print(FirebaseAuth.instance.currentUser);
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on FirebaseAuthException catch (e) {
       emit(state.copyWith(

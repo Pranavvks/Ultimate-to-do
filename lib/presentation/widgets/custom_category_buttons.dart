@@ -10,19 +10,28 @@ class CustomCategoryButton extends StatefulWidget {
 }
 
 class _CustomCategoryButtonState extends State<CustomCategoryButton> {
+  static late String category;
   @override
   Widget build(BuildContext context) {
+    bool isselected = false;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
           children: [
-            Container(
-                margin: EdgeInsets.all(10),
-                child: CustomPaint(
-                  size: Size(19, 19),
-                  painter: CategoryButtonPainter(color: Colors.orange),
-                )),
+            GestureDetector(
+              onTap: () => {
+                setState(() {}),
+                isselected = !isselected,
+              },
+              child: Container(
+                  margin: EdgeInsets.all(10),
+                  child: CustomPaint(
+                    size: Size(19, 19),
+                    painter: CategoryButtonPainter(color: Colors.orange),
+                  )),
+            ),
             Container(
               margin: EdgeInsets.all(20),
               child: Text(
@@ -32,21 +41,28 @@ class _CustomCategoryButtonState extends State<CustomCategoryButton> {
                     color: Colors.black,
                     fontSize: 17),
               ),
-            ),
+            )
           ],
         ),
         Column(
           children: [
             Row(
               children: [
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: CustomPaint(
-                      size: Size(19, 19),
-                      painter: CategoryButtonPainter(
-                        color: Colors.green,
-                      ),
-                    )),
+                GestureDetector(
+                  onTap: () => {
+                    category = "Personal",
+                    isselected = !isselected,
+                    setState(() {})
+                  },
+                  child: Container(
+                      margin: EdgeInsets.all(10),
+                      child: CustomPaint(
+                        size: Size(19, 19),
+                        painter: CategoryButtonPainter(
+                          color: Colors.green,
+                        ),
+                      )),
+                ),
                 Container(
                   margin: EdgeInsets.all(20),
                   child: Text(
@@ -56,7 +72,7 @@ class _CustomCategoryButtonState extends State<CustomCategoryButton> {
                         color: Colors.black,
                         fontSize: 17),
                   ),
-                ),
+                )
               ],
             ),
           ],
@@ -89,12 +105,15 @@ class _CustomCategoryButtonState extends State<CustomCategoryButton> {
           children: [
             Row(
               children: [
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: CustomPaint(
-                      size: Size(19, 19),
-                      painter: CategoryButtonPainter(color: Colors.purple),
-                    )),
+                GestureDetector(
+                  onTap: () => category = "Fitness",
+                  child: Container(
+                      margin: EdgeInsets.all(10),
+                      child: CustomPaint(
+                        size: Size(19, 19),
+                        painter: CategoryButtonPainter(color: Colors.purple),
+                      )),
+                ),
                 Container(
                   margin: EdgeInsets.all(20),
                   child: Text(
@@ -113,12 +132,20 @@ class _CustomCategoryButtonState extends State<CustomCategoryButton> {
           children: [
             Row(
               children: [
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: CustomPaint(
-                      size: Size(19, 19),
-                      painter: CategoryButtonPainter(color: Colors.redAccent),
-                    )),
+                GestureDetector(
+                  onTap: () => {
+                    category = "Other List",
+                    setState(() {
+                      isselected = !isselected;
+                    })
+                  },
+                  child: Container(
+                      margin: EdgeInsets.all(10),
+                      child: CustomPaint(
+                        size: Size(19, 19),
+                        painter: CategoryButtonPainter(color: Colors.redAccent),
+                      )),
+                ),
                 Container(
                   margin: EdgeInsets.all(20),
                   child: Text(
@@ -170,4 +197,12 @@ class CategoryButtonPainter extends CustomPainter {
     // TODO: implement shouldRepaint
     return false;
   }
+}
+
+Widget Categorybuttonselected() {
+  return Icon(
+    Icons.done,
+    size: 44,
+    color: Colors.black,
+  );
 }
