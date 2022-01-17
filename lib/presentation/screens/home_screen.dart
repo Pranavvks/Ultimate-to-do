@@ -4,7 +4,7 @@ import 'package:the_ultimate_todo/presentation/screens/add_task_screen.dart';
 // import 'package:the_ultimate_todo/presentation/widgets/custom_category_buttons.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  // const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

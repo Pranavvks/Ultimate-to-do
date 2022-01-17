@@ -41,32 +41,4 @@ Future<void> getTasks(FirebaseAuth user) async {
       .get();
   var taskitems = querySnapshot.docs;
   var x = taskitems.map((e) => print(e.get("Tasks")));
-  print(x);
-  // taskitems.map((e) => print(e));
 }
-
-
-
-
-/*
- for (int i = 0; i < 10; i++)
-      "Tasks": [
-        {
-          "task_title": "Meeting with Dev team",
-          "isCompleted": false,
-        }
-      ]
-
-  
-  final ref = _db
-      .collection("Daily_tasks")
-      .where('_id', isEqualTo: user.currentUser!.uid)
-      .snapshots();
-  // QuerySnapshot<Map<String, dynamic>> doc = await ref.get();
-  // doc.
-  List tasks = [];
-  var x = ref.map(
-      (event) => event.docs.forEach((element) => element.data()["Tasks"][0]));
-  await for (final value in x) {
-    tasks.add(value);
-*/

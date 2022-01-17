@@ -44,18 +44,19 @@ class SignUpCubit extends Cubit<SignUpState> {
       final FirebaseAuth = await Future.delayed(Duration(milliseconds: 500));
       _auth.createUserWithEmailAndPassword(
           email: state.email.value, password: state.password.value);
-      print(state.name.value + "Name in signup...");
-      _auth.currentUser!.updateDisplayName(state.name.value);
-      createUserInDatabase(_auth);
+      emit(state.copyWith(status: FormzStatus.submissionSuccess));
+
+      // print(state.name.value + "Name in signup...");
+      // _auth.currentUser!.updateDisplayName(state.name.value);
+
+      // createUserInDatabase(_auth);
+
     } on PlatformException catch (e) {
       print(e.code);
       if (e.code == 'auth/email-already-in-use') {
         emit(state.copyWith(
             status: FormzStatus.submissionFailure,
             snackbarmessage: "Email already taken use another email"));
-      } else {
-        emit(state.copyWith(
-            status: FormzStatus.submissionSuccess, exceptionError: e.message));
       }
     }
   }

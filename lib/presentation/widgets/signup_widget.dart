@@ -329,10 +329,10 @@ class SignupButton extends StatelessWidget {
       height: 100,
       child: BlocConsumer<SignUpCubit, SignUpState>(
         listener: (context, state) {
-          if (state.snackbarmessage != "") {
-            final snackbar = SnackBar(content: Text(state.snackbarmessage));
-            ScaffoldMessenger.of(context).showSnackBar(snackbar);
-          }
+          // if (state.snackbarmessage != "") {
+          //   final snackbar = SnackBar(content: Text(state.snackbarmessage));
+          //   ScaffoldMessenger.of(context).showSnackBar(snackbar);
+          // }
         },
         builder: (context, state) {
           return BlocBuilder<SignUpCubit, SignUpState>(
