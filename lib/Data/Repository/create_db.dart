@@ -1,5 +1,12 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:the_ultimate_todo/Data/Provider/daily_todo_api.dart';
+import 'package:the_ultimate_todo/Data/Provider/daily_todo_api_db.dart';
+import 'package:the_ultimate_todo/services/models/tasks/daily_tasks.dart';
+import 'package:uuid/uuid.dart';
 
 final _db = FirebaseFirestore.instance;
 
@@ -15,30 +22,50 @@ Future<void> createDailyTasks(FirebaseAuth user) async {
   List<List<Map>> tasks = [];
   tasks.add([
     {
+      "description": "Agenda to complete Flutter project",
       "task_title": "Meeting with Dev team",
       "isCompleted": false,
+      "id": Uuid().v4(),
     },
     {
+      "description": "Agenda to complete Flutter project",
       "task_title": "Meeting with design team",
       "isCompleted": false,
+      "id": Uuid().v4(),
     },
     {
+      "description": "Agenda to complete Flutter project",
       "task_title": "Meeting with design team",
       "isCompleted": false,
+      "id": Uuid().v4(),
     }
   ]);
   await _db
       .collection("Daily_tasks")
       .doc()
       .set({"_id": user.currentUser!.uid, "Tasks": tasks[0]});
+
   getTasks(user);
 }
 
 Future<void> getTasks(FirebaseAuth user) async {
+  List<DailyTasks> x = [];
+
+  final todoStreamController =
+      BehaviorSubject<List<DailyTasks>>.seeded(const []);
   var querySnapshot = await _db
       .collection("Daily_tasks")
       .where('_id', isEqualTo: user.currentUser!.uid)
-      .get();
-  var taskitems = querySnapshot.docs;
-  var x = taskitems.map((e) => print(e.get("Tasks")));
+      .snapshots()
+      .listen((snapshot) {
+    snapshot.docs.forEach((doc) {
+      var data = doc.get("Tasks");
+      for (var individual_tasks in data) {
+        DailyTasks object = DailyTasks.fromJson(individual_tasks);
+        x.add(object);
+      }
+    });
+    todoStreamController.add(x);
+    print(todoStreamController);
+  });
 }

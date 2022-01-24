@@ -183,13 +183,6 @@ class CategoryButtonPainter extends CustomPainter {
     final roundedrect =
         RRect.fromLTRBR(0, 0, size.width, size.height, Radius.circular(7.34));
     canvas.drawRRect(roundedrect, paint);
-
-    // canvas.drawLine(startingPoint, endingPoint, paint);
-
-    // var path = Path();
-    // path.moveTo(0, size.height / 2);
-    // path.lineTo(size.width, size.height / 2);
-    // canvas.drawPath(path, paint);
   }
 
   @override
@@ -199,10 +192,24 @@ class CategoryButtonPainter extends CustomPainter {
   }
 }
 
-Widget Categorybuttonselected() {
-  return Icon(
-    Icons.done,
-    size: 44,
-    color: Colors.black,
-  );
+class TaskButtonPainter extends CustomPainter {
+  Color color;
+  TaskButtonPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint()
+      ..color = color
+      ..strokeWidth = 2
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    canvas.drawCircle(Offset(10, 10), 15, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    // TODO: implement shouldRepaint
+    return false;
+  }
 }

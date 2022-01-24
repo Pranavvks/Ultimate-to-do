@@ -7,6 +7,8 @@ import 'package:firebase_auth_oauth/firebase_auth_oauth.dart';
 import 'package:flutter/services.dart';
 import 'package:formz/formz.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import 'package:the_ultimate_todo/Data/Repository/create_db.dart';
 import 'package:the_ultimate_todo/services/models/authentication/email.dart';
 import 'package:the_ultimate_todo/services/models/authentication/password.dart';
 
@@ -50,6 +52,7 @@ class LoginCubit extends Cubit<LoginState> {
       emit(state.copyWith(
           status: FormzStatus.submissionFailure, exceptionError: e.message));
     }
+    getTasks(_auth);
   }
 
   Future signInWithGoogle() async {

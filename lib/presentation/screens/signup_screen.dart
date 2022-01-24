@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:the_ultimate_todo/business_logic/cubits/login/cubit/sign_up/cubit/sign_up_cubit.dart';
-import 'package:the_ultimate_todo/presentation/screens/home_screen.dart';
+
 import 'package:the_ultimate_todo/presentation/screens/home_screen_redesign.dart';
 import 'package:the_ultimate_todo/presentation/widgets/signup_widget.dart';
 
@@ -21,13 +21,13 @@ class SignUp extends StatelessWidget {
               content: Text('Authenticated as ' + state.email.toString()),
             );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => NewHomeScreen(
-                      // userName: state.name.toString(),
-                      )),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //       builder: (context) => NewHomeScreen(
+            //           // userName: state.name.toString(),
+            //           )),
+            // );
           }
         },
         builder: (context, state) {

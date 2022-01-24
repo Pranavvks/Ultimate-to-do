@@ -19,8 +19,9 @@ class CategoryListItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.all(20),
+        margin: EdgeInsets.only(left: 12, right: 12, top: 8, bottom: 10),
         child: ListView(
+          padding: EdgeInsets.all(1),
           scrollDirection: Axis.horizontal,
           children: <Widget>[
             Column(
