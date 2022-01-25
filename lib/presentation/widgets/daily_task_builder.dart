@@ -1,37 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:the_ultimate_todo/Data/Provider/daily_todo_api_db.dart';
 import 'package:the_ultimate_todo/services/models/tasks/daily_tasks.dart';
 import 'package:the_ultimate_todo/presentation/widgets/custom_category_buttons.dart';
 
 class DailyTaskBuilder extends StatefulWidget {
-  final String task_title;
-  final bool isCompleted;
-  final Color color;
-  DailyTaskBuilder(
-      {Key? key,
-      required this.task_title,
-      required this.isCompleted,
-      required this.color})
-      : super(key: key);
-
+  DailyTaskBuilder({
+    required this.streamy,
+    Key? key,
+  }) : super(key: key);
+  var streamy;
   @override
   State<DailyTaskBuilder> createState() => _DailyTaskBuilderState();
 }
 
 class _DailyTaskBuilderState extends State<DailyTaskBuilder> {
   // List<DailyTaskBuilderUI> daily_tasks = [];
-  void addTaskstoList() {
-    daily_tasks.add(DailyTasks(
-      task_title: widget.task_title,
-      isCompleted: widget.isCompleted,
-    ));
-  }
-
-  List<DailyTasks> daily_tasks = [];
 
   @override
   Widget build(BuildContext context) {
-    addTaskstoList();
-    return ListView.builder(
+    return StreamBuilder(
+        stream: widget.streamy,
+        builder: (context, AsyncSnapshot<dynamic> snapshot) {
+          return DailyTaskBuilderUI(
+              dailyTasks: snapshot.data, color: Colors.green);
+        });
+  }
+}
+/*
+ListView.builder(
         physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.all(0),
         scrollDirection: Axis.vertical,
@@ -44,16 +40,16 @@ class _DailyTaskBuilderState extends State<DailyTaskBuilder> {
             color: widget.color,
           );
         });
-  }
-}
+
+*/
 
 class DailyTaskBuilderUI extends StatefulWidget {
   final DailyTasks dailyTasks;
-  final VoidCallback addtasks;
+  // final VoidCallback addtasks;
   final Color color;
   DailyTaskBuilderUI({
     required this.dailyTasks,
-    required this.addtasks,
+    // required this.addtasks,
     required this.color,
     Key? key,
   }) : super(key: key);
@@ -65,7 +61,6 @@ class DailyTaskBuilderUI extends StatefulWidget {
 class _DailyTaskBuilderUIState extends State<DailyTaskBuilderUI> {
   @override
   Widget build(BuildContext context) {
-    widget.addtasks;
     return Card(
       color: Color(0xff0A155A),
       child: Container(

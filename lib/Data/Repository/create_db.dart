@@ -45,27 +45,5 @@ Future<void> createDailyTasks(FirebaseAuth user) async {
       .doc()
       .set({"_id": user.currentUser!.uid, "Tasks": tasks[0]});
 
-  getTasks(user);
-}
-
-Future<void> getTasks(FirebaseAuth user) async {
-  List<DailyTasks> x = [];
-
-  final todoStreamController =
-      BehaviorSubject<List<DailyTasks>>.seeded(const []);
-  var querySnapshot = await _db
-      .collection("Daily_tasks")
-      .where('_id', isEqualTo: user.currentUser!.uid)
-      .snapshots()
-      .listen((snapshot) {
-    snapshot.docs.forEach((doc) {
-      var data = doc.get("Tasks");
-      for (var individual_tasks in data) {
-        DailyTasks object = DailyTasks.fromJson(individual_tasks);
-        x.add(object);
-      }
-    });
-    todoStreamController.add(x);
-    print(todoStreamController);
-  });
+  // getTasks(user);
 }

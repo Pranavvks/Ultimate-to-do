@@ -1,22 +1,27 @@
 part of 'tasks_bloc.dart';
 
-abstract class TasksState extends Equatable {
-  const TasksState();
+enum TodoStatus { initial, loading, success, failure }
+
+class DailyTodoState extends Equatable {
+  DailyTodoState({
+    this.status = TodoStatus.initial,
+    this.daily_tasks = const [],
+  });
+
+  final TodoStatus status;
+  final List<DailyTasks> daily_tasks;
+
+  DailyTodoState copyWith({
+    TodoStatus? status,
+    List<DailyTasks>? daily_tasks,
+  }) {
+    return DailyTodoState(
+      status: status ?? this.status,
+      daily_tasks: daily_tasks ?? this.daily_tasks,
+    );
+  }
 
   @override
-  List<Object> get props => [];
-}
-
-class TasksInitialState extends TasksState {}
-
-class TasksLoadingState extends TasksState {}
-
-class TasksLoadedState extends TasksState {
-  List<Tasks> tasks;
-  TasksLoadedState({required this.tasks});
-}
-
-class TasksErrorState extends TasksState {
-  String message;
-  TasksErrorState({required this.message});
+  // TODO: implement props
+  List<Object?> get props => [status, daily_tasks];
 }

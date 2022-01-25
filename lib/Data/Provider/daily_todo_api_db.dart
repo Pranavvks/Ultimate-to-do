@@ -7,45 +7,37 @@ import 'package:the_ultimate_todo/services/models/tasks/daily_tasks.dart';
 
 import './daily_todo_api.dart';
 
-class DailyTodoApi {
-  DailyTodoApi();
-
-  var user;
-  var db;
-  var ref;
-  var listitems;
-
-  final _todoStreamController =
-      BehaviorSubject<List<DailyTasks>>.seeded(const []);
-  final todonormalStreamController =
-      StreamController<List<DailyTasks>>().add(const []);
-
-  BehaviorSubject<List<DailyTasks>> get todoStreamController {
-    return _todoStreamController;
-  }
-
-  Future<void> init() async {
-    user = FirebaseAuth.instance;
-    db = FirebaseFirestore.instance;
-    var alltasks;
-    var singletask;
-
-    var ref = await db
-        .collection("Daily_Tasks")
-        .where('_id', isEqualTo: user.currentUser!.uid)
-        .snapshots();
-
-    var data = ref.map((e) => {
-          alltasks = e.docs.get("Tasks"),
-          singletask = DailyTasks.fromJson(singletask),
-          _todoStreamController.add(singletask),
-        });
-  }
-}
-
 class DailyTodoApiDb extends DailyTodosApi {
-  Stream<Future<List<Iterable<DailyTasks>>>> getDailyTasks() async* {
-    throw UnimplementedError();
+  final todoStreamController =
+      BehaviorSubject<List<DailyTasks>>.seeded(const []);
+
+  var user = FirebaseAuth.instance.currentUser;
+  var db = FirebaseFirestore.instance;
+
+  @override
+  BehaviorSubject<List<DailyTasks>> getDailyTasks() {
+    List<DailyTasks> x = [];
+
+    final todoStreamController =
+        BehaviorSubject<List<DailyTasks>>.seeded(const []);
+
+    var querySnapshot = db
+        .collection("Daily_tasks")
+        .where('_id', isEqualTo: user!.uid)
+        .snapshots()
+        .listen((snapshot) {
+      snapshot.docs.forEach((doc) {
+        var data = doc.get("Tasks");
+        for (var individual_tasks in data) {
+          DailyTasks object = DailyTasks.fromJson(individual_tasks);
+          x.add(object);
+        }
+      });
+      todoStreamController.add(x);
+
+      // print(todoStreamController.stream.value);
+    });
+    return todoStreamController;
   }
 
   @override

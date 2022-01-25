@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:the_ultimate_todo/business_logic/cubits/login/cubit/login_cubit.dart';
+import 'package:the_ultimate_todo/presentation/screens/home_screen_redesign.dart';
 import 'package:the_ultimate_todo/presentation/widgets/loginrectangle.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -14,7 +15,14 @@ class LoginScreen extends StatelessWidget {
           if (state.status.isSubmissionFailure) {
             print('submission failure');
           } else if (state.status.isSubmissionSuccess) {
-            print('success');
+            var snackBar = SnackBar(
+              content: Text('Authenticated as ' + state.email.toString()),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => NewHomeScreen()),
+            );
           }
         },
         builder: (context, state) {

@@ -21,13 +21,13 @@ class SignUp extends StatelessWidget {
               content: Text('Authenticated as ' + state.email.toString()),
             );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //       builder: (context) => NewHomeScreen(
-            //           // userName: state.name.toString(),
-            //           )),
-            // );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => NewHomeScreen(
+                      // userName: state.name.toString(),
+                      )),
+            );
           }
         },
         builder: (context, state) {

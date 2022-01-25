@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:the_ultimate_todo/Data/Provider/daily_todo_api_db.dart';
 import 'package:the_ultimate_todo/presentation/screens/add_task_screen.dart';
 import 'package:the_ultimate_todo/presentation/widgets/category_listitems.dart';
 import 'package:the_ultimate_todo/presentation/widgets/daily_task_builder.dart';
 
 class NewHomeScreen extends StatelessWidget {
-  NewHomeScreen();
+  DailyTodoApiDb? obj;
+  var stream;
+  Stream getdailytodo() {
+    if (obj == null) {
+      stream = obj!.todoStreamController;
+    }
+    return stream;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,6 +128,7 @@ class NewHomeScreen extends StatelessWidget {
                         ),
                         margin: EdgeInsets.only(right: 210, bottom: 20),
                       ),
+                      DailyTaskBuilder(streamy: stream)
                     ],
                   ),
                 ),
@@ -129,12 +138,3 @@ class NewHomeScreen extends StatelessWidget {
         ));
   }
 }
-/*
- DailyTaskBuilder(
-                  task_title: "Complete DSA Backtracking N-Queens",
-                  isCompleted: false,
-                  color: Colors.pink,
-                ),
-                
-
-*/
