@@ -47,3 +47,32 @@ Future<void> createDailyTasks(FirebaseAuth user) async {
 
   // getTasks(user);
 }
+
+Stream<List<DailyTasks>> getDailyTasks() async* {
+  var user = FirebaseAuth.instance.currentUser;
+
+  List<DailyTasks> x = [];
+
+  final todoStreamController =
+      BehaviorSubject<List<DailyTasks>>.seeded(const []);
+
+  var querySnapshot = await new Future.delayed(const Duration(seconds: 1));
+  _db
+      .collection("Daily_tasks")
+      .where('_id', isEqualTo: user!.uid)
+      .snapshots()
+      .listen((snapshot)
+          //await new Future.delayed(const Duration(seconds: 1));
+          {
+    snapshot.docs.forEach((doc) {
+      var data = doc.get("Tasks");
+      for (var individual_tasks in data) {
+        DailyTasks object = DailyTasks.fromJson(individual_tasks);
+        x.add(object);
+      }
+    });
+    todoStreamController.add(x);
+    print(todoStreamController.value);
+  });
+  yield* todoStreamController.asBroadcastStream();
+}

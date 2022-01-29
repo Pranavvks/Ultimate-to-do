@@ -15,13 +15,14 @@ class DailyTodoApiDb extends DailyTodosApi {
   var db = FirebaseFirestore.instance;
 
   @override
-  BehaviorSubject<List<DailyTasks>> getDailyTasks() {
+  Stream<List<DailyTasks>> getDailyTasks() {
     List<DailyTasks> x = [];
 
     final todoStreamController =
         BehaviorSubject<List<DailyTasks>>.seeded(const []);
 
-    var querySnapshot = db
+    var querySnapshot = Future.delayed(Duration(milliseconds: 500));
+    db
         .collection("Daily_tasks")
         .where('_id', isEqualTo: user!.uid)
         .snapshots()
@@ -34,10 +35,9 @@ class DailyTodoApiDb extends DailyTodosApi {
         }
       });
       todoStreamController.add(x);
-
-      // print(todoStreamController.stream.value);
+      print(todoStreamController.value);
     });
-    return todoStreamController;
+    return todoStreamController.asBroadcastStream();
   }
 
   @override
