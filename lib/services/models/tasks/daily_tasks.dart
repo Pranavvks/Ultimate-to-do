@@ -8,14 +8,14 @@ class DailyTasks extends Equatable {
   final bool isCompleted;
 
   DailyTasks({
-    String? id,
+    required this.id,
     required this.task_title,
     this.description = '',
     this.isCompleted = false,
-  })  : assert(id!.isNotEmpty),
-        id = id ?? const Uuid().v4();
+  });
 
   DailyTasks copyWith({
+    required String id,
     String? task_title,
     bool? isCompleted,
     String? description,

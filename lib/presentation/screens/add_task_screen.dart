@@ -1,17 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:the_ultimate_todo/Data/Repository/tasks_repository.dart';
+import 'package:the_ultimate_todo/business_logic/cubits/login/cubit/bloc/tasks_bloc.dart';
 
 import 'package:the_ultimate_todo/presentation/widgets/custom_bottom_sheet.dart';
 import 'package:the_ultimate_todo/presentation/widgets/custom_category_buttons.dart';
+import 'package:the_ultimate_todo/services/models/tasks/daily_tasks.dart';
+import 'package:uuid/uuid.dart';
 
-class AddTasksScreen extends StatefulWidget {
+class AddTasksScreen extends StatelessWidget {
   const AddTasksScreen({Key? key}) : super(key: key);
 
   @override
-  State<AddTasksScreen> createState() => _AddTasksScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider<TasksBloc>(
+      create: (context) =>
+          TasksBloc(dailytasksrepository: context.read<TasksRepository>()),
+      child: Container(
+        child: AddTasksScreenHelper(),
+      ),
+    );
+  }
 }
 
-class _AddTasksScreenState extends State<AddTasksScreen> {
+class AddTasksScreenHelper extends StatefulWidget {
+  const AddTasksScreenHelper({Key? key}) : super(key: key);
+
+  @override
+  State<AddTasksScreenHelper> createState() => _AddTasksScreenHelperState();
+}
+
+class _AddTasksScreenHelperState extends State<AddTasksScreenHelper> {
   final myController = TextEditingController();
 
   @override
@@ -32,30 +52,42 @@ class _AddTasksScreenState extends State<AddTasksScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String tasktitle = "";
+    // String task_description = "";
+    // String category = "";
+    // String duetime = "";
+    // String duedate = "";
+    var task;
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(79, 116, 255, 1),
-      floatingActionButton: SizedBox(
-        child: Container(
-          margin: EdgeInsets.only(right: 60, left: 20),
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 17, right: 4, left: 4),
-                child: Text(
-                  "New Task",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                      color: Colors.white),
+      floatingActionButton: InkWell(
+        onTap: () => {
+          BlocProvider.of<TasksBloc>(context).add(CreateEverydayTasks(task)),
+        },
+        child: SizedBox(
+          child: Container(
+            margin: EdgeInsets.only(right: 60, left: 20),
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 17, right: 4, left: 4),
+                  child: Text(
+                    "New Task",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        color: Colors.white),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          height: 60,
-          width: 220,
-          decoration: BoxDecoration(
-            color: Colors.pinkAccent,
-            borderRadius: BorderRadius.circular(20.0),
+              ],
+            ),
+            height: 60,
+            width: 220,
+            decoration: BoxDecoration(
+              color: Colors.pinkAccent,
+              borderRadius: BorderRadius.circular(20.0),
+            ),
           ),
         ),
       ),
@@ -67,7 +99,9 @@ class _AddTasksScreenState extends State<AddTasksScreen> {
               margin: EdgeInsets.only(top: 36, left: 105),
               child: TextField(
                 controller: myController,
-                onSubmitted: (value) => print(value),
+                onSubmitted: (value) => {
+                  task = createTasks(value),
+                },
                 decoration: InputDecoration(
                   hintStyle: TextStyle(
                       color: Color.fromRGBO(187, 196, 217, 1),
@@ -168,8 +202,18 @@ class _AddTasksScreenState extends State<AddTasksScreen> {
           caseSensitive: false);
 
       final match = regex.firstMatch(data);
-      final date = print(match!.group(1));
-      final time = print(match.group(3));
+      final date = (match!.group(1));
+      final time = (match.group(3));
     }
   }
+}
+
+DailyTasks createTasks(
+  String tasktitle,
+) {
+  var id = Uuid().v4();
+  return DailyTasks(
+    task_title: tasktitle,
+    id: id,
+  );
 }

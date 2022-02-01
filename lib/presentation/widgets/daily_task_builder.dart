@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:the_ultimate_todo/Data/Provider/daily_todo_api_db.dart';
 import 'package:the_ultimate_todo/services/models/tasks/daily_tasks.dart';
 import 'package:the_ultimate_todo/presentation/widgets/custom_category_buttons.dart';
-import 'package:the_ultimate_todo/services/models/tasks/list_daily_tasks.dart';
 
 class DailyTaskBuilder extends StatefulWidget {
   DailyTaskBuilder({
     required this.dailytaskslist,
     Key? key,
   }) : super(key: key);
-  List<DailyTasks> dailytaskslist;
+  Stream<List<DailyTasks>>? dailytaskslist;
 
   @override
   State<DailyTaskBuilder> createState() => _DailyTaskBuilderState();
@@ -20,54 +18,65 @@ class _DailyTaskBuilderState extends State<DailyTaskBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.all(0),
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: widget.dailytaskslist.length,
-        itemBuilder: (context, index) {
-          return Card(
-            color: Color(0xff0A155A),
-            child: Container(
-              margin: EdgeInsets.all(6),
-              width: 270,
-              height: 65,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                          margin:
-                              EdgeInsets.only(left: 14, right: 10, bottom: 20),
-                          child: CustomPaint(
-                            painter: TaskButtonPainter(color: Colors.green),
-                          )),
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              top: 20, right: 0, left: 30, bottom: 20),
-                          child: Text(
-                            widget.dailytaskslist[index].task_title,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
-            ),
-          );
-        });
+    return StreamBuilder(
+      stream: widget.dailytaskslist,
+      builder: (context, AsyncSnapshot<List<DailyTasks>> snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.all(0),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  color: Color(0xff0A155A),
+                  child: Container(
+                    margin: EdgeInsets.all(6),
+                    width: 270,
+                    height: 65,
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                                margin: EdgeInsets.only(
+                                    left: 14, right: 10, bottom: 20),
+                                child: CustomPaint(
+                                  painter:
+                                      TaskButtonPainter(color: Colors.green),
+                                )),
+                            Expanded(
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    top: 20, right: 0, left: 30, bottom: 20),
+                                child: Text(
+                                  snapshot.data![index].task_title,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                );
+              });
+        } else {
+          return Container();
+        }
+      },
+    );
   }
 }
+  
 
 /*
 
@@ -161,6 +170,54 @@ class _DailyTaskBuilderState extends State<DailyTaskBuilder> {
                     ),
 
 
+ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        padding: EdgeInsets.all(0),
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: widget.dailytaskslist.length,
+        itemBuilder: (context, index) {
+          return Card(
+            color: Color(0xff0A155A),
+            child: Container(
+              margin: EdgeInsets.all(6),
+              width: 270,
+              height: 65,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                          margin:
+                              EdgeInsets.only(left: 14, right: 10, bottom: 20),
+                          child: CustomPaint(
+                            painter: TaskButtonPainter(color: Colors.green),
+                          )),
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(
+                              top: 20, right: 0, left: 30, bottom: 20),
+                          child: Text(
+                            widget.dailytaskslist[index].task_title,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            ),
+          );
+        });
+  }
+}
 
 
 */

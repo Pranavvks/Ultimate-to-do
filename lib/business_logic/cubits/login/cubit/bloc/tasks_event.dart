@@ -7,6 +7,14 @@ class LoadEverydayTasks extends TasksEvent {
   List<Object?> get props => [];
 }
 
+class CreateEverydayTasks extends TasksEvent {
+  final DailyTasks task;
+
+  CreateEverydayTasks(this.task);
+  @override
+  List<Object?> get props => [task];
+}
+
 class EveryDayTaskCompleted extends TasksEvent {
   @override
   // TODO: implement props

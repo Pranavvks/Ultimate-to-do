@@ -2,22 +2,24 @@ part of 'tasks_bloc.dart';
 
 enum TodoStatus { initial, loading, success, failure }
 
-class DailyTodoState extends Equatable {
-  DailyTodoState({
+abstract class TodosState extends Equatable {}
+
+class DisplayTodoState extends TodosState {
+  DisplayTodoState({
     this.status = TodoStatus.initial,
-    this.daily_tasks = const [],
+    this.daily_tasks,
   });
 
   final TodoStatus status;
-  final List<DailyTasks> daily_tasks;
+  final Stream<List<DailyTasks>>? daily_tasks;
 
-  DailyTodoState copyWith({
+  DisplayTodoState copyWith({
     TodoStatus? status,
-    List<DailyTasks>? daily_tasks,
+    Stream<List<DailyTasks>>? daily_tasks,
   }) {
-    return DailyTodoState(
+    return DisplayTodoState(
       status: status ?? this.status,
-      daily_tasks: daily_tasks ?? this.daily_tasks,
+      daily_tasks: this.daily_tasks,
     );
   }
 

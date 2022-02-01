@@ -13,14 +13,10 @@ class DailyTodoApiDb extends DailyTodosApi {
 
   var user = FirebaseAuth.instance.currentUser;
   var db = FirebaseFirestore.instance;
+  List<DailyTasks> x = [];
 
   @override
   Stream<List<DailyTasks>> getDailyTasks() {
-    List<DailyTasks> x = [];
-
-    final todoStreamController =
-        BehaviorSubject<List<DailyTasks>>.seeded(const []);
-
     var querySnapshot = Future.delayed(Duration(milliseconds: 500));
     db
         .collection("Daily_tasks")
@@ -30,6 +26,7 @@ class DailyTodoApiDb extends DailyTodosApi {
       snapshot.docs.forEach((doc) {
         var data = doc.get("Tasks");
         for (var individual_tasks in data) {
+          print(individual_tasks);
           DailyTasks object = DailyTasks.fromJson(individual_tasks);
           x.add(object);
         }
@@ -37,6 +34,7 @@ class DailyTodoApiDb extends DailyTodosApi {
       todoStreamController.add(x);
       print(todoStreamController.value);
     });
+    print(user!.uid);
     return todoStreamController.asBroadcastStream();
   }
 
@@ -56,6 +54,64 @@ class DailyTodoApiDb extends DailyTodosApi {
   Future<void> updateDailytask() {
     // TODO: implement updateDailytask
     throw UnimplementedError();
+  }
+
+  @override
+  Future<void> CreateDailyTask(DailyTasks task) async {
+    var increment = await db
+        .collection("Daily_tasks")
+        .doc(user!.uid)
+        .collection("Todo-count")
+        .doc(user!.uid)
+        .update({"count": FieldValue.increment(1)}).onError((_, __) async =>
+            await db
+                .collection("Daily_tasks")
+                .doc(user!.uid)
+                .collection("Todo-count")
+                .doc(user!.uid)
+                .set({"count": FieldValue.increment(1)}));
+
+    var response;
+
+    var doc = await db
+        .collection("Daily_tasks")
+        .doc(user!.uid)
+        .collection("Todo-count")
+        .where("count", isGreaterThanOrEqualTo: 1)
+        .get()
+        .then((value) => value.docs.forEach((element) {
+              response = element.data();
+            }));
+
+    int count = response["count"];
+
+    if (count == 1) {
+      await db.collection("Daily_tasks").doc(user!.uid).set({
+        "_id": user!.uid,
+        "Tasks": [
+          {
+            "id": task.id,
+            "task_title": task.task_title,
+            "description": "",
+            "isCompleted": false,
+          }
+        ]
+      });
+    } else {
+      var x = [
+        {
+          "id": task.id,
+          "task_title": task.task_title,
+          "description": "",
+          "isCompleted": false,
+        }
+      ];
+
+      await db
+          .collection("Daily_tasks")
+          .doc(user!.uid)
+          .update({"Tasks": FieldValue.arrayUnion(x)});
+    }
   }
 }
 

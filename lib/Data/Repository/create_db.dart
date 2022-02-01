@@ -15,7 +15,6 @@ Future<void> createUserInDatabase(FirebaseAuth user) async {
     "NAME_FIELD": user.currentUser?.displayName,
     "EMAIL_FIELD": user.currentUser?.email,
   });
-  createDailyTasks(user);
 }
 
 Future<void> createDailyTasks(FirebaseAuth user) async {

@@ -9,4 +9,6 @@ class TasksRepository {
   final DailyTodoApiDb dailyTodosApiDb;
 
   Stream<List<DailyTasks>> getDailyTodos() => dailyTodosApiDb.getDailyTasks();
+  Future<void> createdDailyTodo(DailyTasks task) =>
+      dailyTodosApiDb.CreateDailyTask(task);
 }

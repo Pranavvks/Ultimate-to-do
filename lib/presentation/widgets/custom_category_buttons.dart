@@ -10,38 +10,47 @@ class CustomCategoryButton extends StatefulWidget {
 }
 
 class _CustomCategoryButtonState extends State<CustomCategoryButton> {
-  static late String category;
+  late State s;
+
   @override
   Widget build(BuildContext context) {
-    bool isselected = false;
+    bool isbusiness = false;
+    late String category;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Row(
           children: [
-            GestureDetector(
-              onTap: () => {
-                setState(() {}),
-                isselected = !isselected,
+            Container(
+                margin: EdgeInsets.all(10),
+                child: CustomPaint(
+                  size: Size(19, 19),
+                  painter: CategoryButtonPainter(color: Colors.orange),
+                )),
+            InkWell(
+              focusColor: Colors.grey[300],
+              onTap: () {
+                setState(() {
+                  category = "Business";
+                  isbusiness = !isbusiness;
+                  print(isbusiness);
+                  if (isbusiness) Text("Hi");
+                });
               },
               child: Container(
-                  margin: EdgeInsets.all(10),
-                  child: CustomPaint(
-                    size: Size(19, 19),
-                    painter: CategoryButtonPainter(color: Colors.orange),
-                  )),
-            ),
-            Container(
-              margin: EdgeInsets.all(20),
-              child: Text(
-                "Business",
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                    fontSize: 17),
+                margin: EdgeInsets.all(20),
+                child: Text(
+                  "Business",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                      fontSize: 17),
+                ),
               ),
-            )
+            ),
+
+            //
           ],
         ),
         Column(
@@ -51,7 +60,7 @@ class _CustomCategoryButtonState extends State<CustomCategoryButton> {
                 GestureDetector(
                   onTap: () => {
                     category = "Personal",
-                    isselected = !isselected,
+                    isbusiness = !isbusiness,
                     setState(() {})
                   },
                   child: Container(
@@ -136,7 +145,7 @@ class _CustomCategoryButtonState extends State<CustomCategoryButton> {
                   onTap: () => {
                     category = "Other List",
                     setState(() {
-                      isselected = !isselected;
+                      isbusiness = !isbusiness;
                     })
                   },
                   child: Container(
@@ -164,6 +173,8 @@ class _CustomCategoryButtonState extends State<CustomCategoryButton> {
     );
   }
 }
+
+// class _CategoryButtonsBloc <T extends State> extends
 
 class CategoryButtonPainter extends CustomPainter {
   Color color;
