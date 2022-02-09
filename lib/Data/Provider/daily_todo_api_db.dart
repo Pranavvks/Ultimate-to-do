@@ -9,33 +9,25 @@ import './daily_todo_api.dart';
 
 class DailyTodoApiDb extends DailyTodosApi {
   final todoStreamController =
-      BehaviorSubject<List<DailyTasks>>.seeded(const []);
+      BehaviorSubject<DocumentSnapshot<Map<String, dynamic>>>();
 
   var user = FirebaseAuth.instance.currentUser;
   var db = FirebaseFirestore.instance;
   List<DailyTasks> x = [];
+  // late StreamController<QuerySnapshot<Map<String, dynamic>>>
+  //     todostreamcontroller;
 
   @override
-  Stream<List<DailyTasks>> getDailyTasks() {
-    var querySnapshot = Future.delayed(Duration(milliseconds: 500));
-    db
-        .collection("Daily_tasks")
-        .where('_id', isEqualTo: user!.uid)
-        .snapshots()
-        .listen((snapshot) {
-      snapshot.docs.forEach((doc) {
-        var data = doc.get("Tasks");
-        for (var individual_tasks in data) {
-          print(individual_tasks);
-          DailyTasks object = DailyTasks.fromJson(individual_tasks);
-          x.add(object);
-        }
-      });
-      todoStreamController.add(x);
-      print(todoStreamController.value);
-    });
-    print(user!.uid);
-    return todoStreamController.asBroadcastStream();
+  BehaviorSubject<DocumentSnapshot<Map<String, dynamic>>> getDailyTasks() {
+    var stream = db.collection("Daily_tasks").doc(user!.uid).snapshots();
+
+    (stream.listen((event) {
+      print(event.data());
+    }));
+
+    todoStreamController.sink.addStream(stream);
+
+    return todoStreamController;
   }
 
   @override

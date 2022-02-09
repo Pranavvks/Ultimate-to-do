@@ -162,7 +162,7 @@ class NewHomeScreen extends StatelessWidget {
                                 Text("No tasks for the day.Tap the add button"),
                           );
                         }
-                        if (state.status == TodoStatus.loading)
+                        if (state.status == TodoStatus.success)
                           return DailyTaskBuilder(
                               dailytaskslist: state.daily_tasks);
                         else {

@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:the_ultimate_todo/services/models/tasks/daily_tasks.dart';
 import 'package:the_ultimate_todo/presentation/widgets/custom_category_buttons.dart';
@@ -7,7 +10,7 @@ class DailyTaskBuilder extends StatefulWidget {
     required this.dailytaskslist,
     Key? key,
   }) : super(key: key);
-  Stream<List<DailyTasks>>? dailytaskslist;
+  StreamController<DocumentSnapshot<Map<String, dynamic>>>? dailytaskslist;
 
   @override
   State<DailyTaskBuilder> createState() => _DailyTaskBuilderState();
@@ -18,16 +21,19 @@ class _DailyTaskBuilderState extends State<DailyTaskBuilder> {
 
   @override
   Widget build(BuildContext context) {
+    List<DailyTasks> x = [];
+    var datastream = widget.dailytaskslist!.stream.listen;
+
     return StreamBuilder(
-      stream: widget.dailytaskslist,
-      builder: (context, AsyncSnapshot<List<DailyTasks>> snapshot) {
+      stream: widget.dailytaskslist!.stream,
+      builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               padding: EdgeInsets.all(0),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: snapshot.data!.length,
+              itemCount: x.length,
               itemBuilder: (context, index) {
                 return Card(
                   color: Color(0xff0A155A),
@@ -51,7 +57,7 @@ class _DailyTaskBuilderState extends State<DailyTaskBuilder> {
                                 margin: EdgeInsets.only(
                                     top: 20, right: 0, left: 30, bottom: 20),
                                 child: Text(
-                                  snapshot.data![index].task_title,
+                                  x[index].task_title,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400,

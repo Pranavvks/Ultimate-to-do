@@ -11,11 +11,11 @@ class DisplayTodoState extends TodosState {
   });
 
   final TodoStatus status;
-  final Stream<List<DailyTasks>>? daily_tasks;
+  final BehaviorSubject<DocumentSnapshot<Map<String, dynamic>>>? daily_tasks;
 
   DisplayTodoState copyWith({
     TodoStatus? status,
-    Stream<List<DailyTasks>>? daily_tasks,
+    BehaviorSubject<DocumentSnapshot<Map<String, dynamic>>>? daily_tasks,
   }) {
     return DisplayTodoState(
       status: status ?? this.status,
