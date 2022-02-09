@@ -22,7 +22,7 @@ class DailyTodoApiDb extends DailyTodosApi {
     var stream = db.collection("Daily_tasks").doc(user!.uid).snapshots();
 
     (stream.listen((event) {
-      print(event.data());
+      print(event.data());       // For reference stream listener works within the provider layer here.
     }));
 
     todoStreamController.sink.addStream(stream);
