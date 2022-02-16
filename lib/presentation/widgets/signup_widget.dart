@@ -23,8 +23,8 @@ class _SignUpWidgetState extends State<SignUpWidget> {
     return Container(
         padding: EdgeInsets.only(top: 1),
         margin: EdgeInsets.only(left: 15, right: 15, top: 100, bottom: 20),
-        height: 695,
-        width: 645,
+        height: 670,
+        width: 625,
         child: CustomPaint(
           painter: RectangleBox(),
           child: Column(
@@ -35,6 +35,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   SignUpButton(context),
                 ],
               ),
+              NameWidget(),
               EmailWidget(),
               PasswordWidget(),
               SignupButton(),
@@ -90,6 +91,70 @@ class _SignUpWidgetState extends State<SignUpWidget> {
             ],
           ),
         ));
+  }
+}
+
+class NameWidget extends StatelessWidget {
+  const NameWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.only(
+            top: 25,
+            left: 29,
+          ),
+          alignment: Alignment.topLeft,
+          child: Text(
+            'Username',
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+          ),
+        ),
+        SizedBox(
+            child: Container(
+          margin: EdgeInsets.only(top: 10, left: 5),
+          height: 60,
+          width: 320,
+          alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+            color: Color(0xFF2D2F41),
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 6.0,
+                offset: Offset(4, 4),
+              ),
+            ],
+          ),
+          child: BlocBuilder<SignUpCubit, SignUpState>(
+            buildWhen: (previous, current) => previous.name != current.name,
+            builder: (context, state) {
+              return TextField(
+                onChanged: (name) =>
+                    context.read<SignUpCubit>().nameChanged(name),
+                keyboardType: TextInputType.name,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top: 14.0),
+                  prefixIcon: Icon(
+                    Icons.email,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  hintText: 'Enter your name',
+                  hintStyle: TextStyle(color: Colors.white54),
+                ),
+              );
+            },
+          ),
+        )),
+      ],
+    );
   }
 }
 
@@ -248,7 +313,7 @@ class RectangleBox extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     // TODO: implement shouldRepaint
-    return true;
+    return false;
   }
 }
 
@@ -262,25 +327,36 @@ class SignupButton extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: 210,
       height: 100,
-      child: BlocBuilder<SignUpCubit, SignUpState>(
-        buildWhen: (previous, current) => previous.status != current.status,
+      child: BlocConsumer<SignUpCubit, SignUpState>(
+        listener: (context, state) {
+          // if (state.snackbarmessage != "") {
+          //   final snackbar = SnackBar(content: Text(state.snackbarmessage));
+          //   ScaffoldMessenger.of(context).showSnackBar(snackbar);
+          // }
+        },
         builder: (context, state) {
-          return RaisedButton(
-            padding: EdgeInsets.all(15.0),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0)),
-            onPressed: () =>
-                context.read<SignUpCubit>().signUpWithCredentials(),
-            color: Colors.blueGrey[900],
-            child: Text(
-              "SIGN UP",
-              style: TextStyle(
-                color: Colors.white,
-                letterSpacing: 1.5,
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-              ),
-            ),
+          return BlocBuilder<SignUpCubit, SignUpState>(
+            buildWhen: (previous, current) => previous.status != current.status,
+            builder: (context, state) {
+              return RaisedButton(
+                padding: EdgeInsets.all(15.0),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0)),
+                onPressed: () => {
+                  context.read<SignUpCubit>().signUpWithCredentials(),
+                },
+                color: Colors.blueGrey[900],
+                child: Text(
+                  "SIGN UP",
+                  style: TextStyle(
+                    color: Colors.white,
+                    letterSpacing: 1.5,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+              );
+            },
           );
         },
       ),

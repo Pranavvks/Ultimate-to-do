@@ -1,0 +1,46 @@
+{
+  "date": "28/12/21",	
+  "id" : 1,     
+   "task_title"    : "Meeting with Tom @ 4 ",
+   "isCompleted"   :  false ,
+   "deadline"      :  "2/01/22" ,
+   "time"          :  "4:00 PM" ,
+   "category" :
+   {
+     "category_id" : 11,
+     "category_name": "Business",
+     "task_list" :  [{
+      "date" : "1/01/22" ,
+      "id" : 2 ,
+      "task_title"    : "Meeting with Tom @ 4 ",
+      "isCompleted"   :  false ,
+      "deadline"      :  "2/01/22" ,
+      "time"          :  "4:00 PM" 
+          },
+          {
+            "date" : "1/01/22" ,
+            "id" : 3 ,
+            "task_title"    : "Meeting with Tom @ 4 ",
+            "isCompleted"   :  false ,
+            "deadline"      :  "2/01/22" ,
+            "time"          :  "4:00 PM" 
+          },
+          {
+            "date" : "1/01/22" ,
+            "id" : 4 ,
+            "task_title"    : "Meeting with Tom @ 4 ",
+            "isCompleted"   :  false ,
+            "deadline"      :  "2/01/22" ,
+            "time"          :  "4:00 PM" 
+          }
+    ]
+  }
+}
+    
+      
+     
+          
+       
+   
+     
+
