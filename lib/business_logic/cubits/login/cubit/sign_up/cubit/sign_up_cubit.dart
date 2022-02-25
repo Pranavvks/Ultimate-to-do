@@ -48,10 +48,8 @@ class SignUpCubit extends Cubit<SignUpState> {
 
       print(state.name.value + "Name in signup...");
       _auth.currentUser!.updateDisplayName(state.name.value);
-
-      createUserInDatabase(_auth);
     } on PlatformException catch (e) {
-      print(e.code);
+      // print(e.code);
       if (e.code == 'auth/email-already-in-use') {
         emit(state.copyWith(
             status: FormzStatus.submissionFailure,

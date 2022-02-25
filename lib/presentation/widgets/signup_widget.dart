@@ -1,14 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:the_ultimate_todo/business_logic/cubits/login/cubit/login_cubit.dart';
 import 'package:the_ultimate_todo/business_logic/cubits/login/cubit/sign_up/cubit/sign_up_cubit.dart';
 import 'package:the_ultimate_todo/presentation/widgets/signin_button.dart';
 import 'package:the_ultimate_todo/presentation/widgets/signup_button.dart';
-
-bool _rememberme = false;
 
 class SignUpWidget extends StatefulWidget {
   const SignUpWidget({Key? key}) : super(key: key);
@@ -21,10 +15,11 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(top: 1),
-        margin: EdgeInsets.only(left: 15, right: 15, top: 100, bottom: 20),
-        height: 670,
-        width: 625,
+        padding: const EdgeInsets.only(top: 1),
+        margin:
+            const EdgeInsets.only(left: 15, right: 15, top: 100, bottom: 20),
+        height: 625,
+        width: 645,
         child: CustomPaint(
           painter: RectangleBox(),
           child: Column(
@@ -35,126 +30,13 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                   SignUpButton(context),
                 ],
               ),
-              NameWidget(),
-              EmailWidget(),
-              PasswordWidget(),
-              SignupButton(),
-              SignUpWithText(),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                      child: Container(
-                          height: 35,
-                          width: 35,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey[900],
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                offset: Offset(0, 2),
-                                blurRadius: 6.0,
-                              ),
-                            ],
-                            image: const DecorationImage(
-                                image:
-                                    AssetImage('assets/images/apple_icon.png')),
-                          )),
-                    ),
-                    GestureDetector(
-                      onTap: () =>
-                          context.read<LoginCubit>().signInWithGoogle(),
-                      child: Container(
-                          height: 35,
-                          width: 35,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey[300],
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                offset: Offset(0, 2),
-                                blurRadius: 6.0,
-                              ),
-                            ],
-                            image: const DecorationImage(
-                                image: AssetImage(
-                                    'assets/images/google_icon.png')),
-                          )),
-                    ),
-                  ],
-                ),
-              )
+              const EmailWidget(),
+              const PasswordWidget(),
+              const Username(),
+              const SignupButton(),
             ],
           ),
         ));
-  }
-}
-
-class NameWidget extends StatelessWidget {
-  const NameWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          margin: EdgeInsets.only(
-            top: 25,
-            left: 29,
-          ),
-          alignment: Alignment.topLeft,
-          child: Text(
-            'Username',
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
-          ),
-        ),
-        SizedBox(
-            child: Container(
-          margin: EdgeInsets.only(top: 10, left: 5),
-          height: 60,
-          width: 320,
-          alignment: Alignment.centerLeft,
-          decoration: BoxDecoration(
-            color: Color(0xFF2D2F41),
-            borderRadius: BorderRadius.circular(10.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 6.0,
-                offset: Offset(4, 4),
-              ),
-            ],
-          ),
-          child: BlocBuilder<SignUpCubit, SignUpState>(
-            buildWhen: (previous, current) => previous.name != current.name,
-            builder: (context, state) {
-              return TextField(
-                onChanged: (name) =>
-                    context.read<SignUpCubit>().nameChanged(name),
-                keyboardType: TextInputType.name,
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(
-                    Icons.email,
-                    color: Colors.deepPurpleAccent,
-                  ),
-                  hintText: 'Enter your name',
-                  hintStyle: TextStyle(color: Colors.white54),
-                ),
-              );
-            },
-          ),
-        )),
-      ],
-    );
   }
 }
 
@@ -168,27 +50,27 @@ class EmailWidget extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(
+          margin: const EdgeInsets.only(
             top: 25,
             left: 29,
           ),
           alignment: Alignment.topLeft,
-          child: Text(
+          child: const Text(
             'Email',
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
           ),
         ),
         SizedBox(
             child: Container(
-          margin: EdgeInsets.only(top: 10, left: 5),
+          margin: const EdgeInsets.only(top: 10, left: 5),
           height: 60,
           width: 320,
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-            color: Color(0xFF2D2F41),
+            color: const Color(0xFF2D2F41),
             borderRadius: BorderRadius.circular(10.0),
             boxShadow: [
-              BoxShadow(
+              const BoxShadow(
                 color: Colors.black12,
                 blurRadius: 6.0,
                 offset: Offset(4, 4),
@@ -202,16 +84,16 @@ class EmailWidget extends StatelessWidget {
                 onChanged: (email) =>
                     context.read<SignUpCubit>().emailChanged(email),
                 keyboardType: TextInputType.emailAddress,
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(
+                  contentPadding: const EdgeInsets.only(top: 14.0),
+                  prefixIcon: const Icon(
                     Icons.email,
                     color: Colors.deepPurpleAccent,
                   ),
                   hintText: 'Enter your Email',
-                  hintStyle: TextStyle(color: Colors.white54),
+                  hintStyle: const TextStyle(color: Colors.white54),
                 ),
               );
             },
@@ -230,27 +112,27 @@ class PasswordWidget extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(
+          margin: const EdgeInsets.only(
             top: 25,
             left: 29,
           ),
           alignment: Alignment.topLeft,
-          child: Text(
+          child: const Text(
             'Password',
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
           ),
         ),
         SizedBox(
             child: Container(
-          margin: EdgeInsets.only(top: 10, left: 5),
+          margin: const EdgeInsets.only(top: 10, left: 5),
           height: 60,
           width: 320,
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-            color: Color(0xFF2D2F41),
+            color: const Color(0xFF2D2F41),
             borderRadius: BorderRadius.circular(10.0),
             boxShadow: [
-              BoxShadow(
+              const BoxShadow(
                 color: Colors.black12,
                 blurRadius: 6.0,
                 offset: Offset(4, 4),
@@ -264,11 +146,11 @@ class PasswordWidget extends StatelessWidget {
                     context.read<SignUpCubit>().passwordChanged(password),
                 keyboardType: TextInputType.text,
                 obscureText: true,
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.white),
+                decoration: const InputDecoration(
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.only(top: 14.0),
-                  prefixIcon: Icon(
+                  prefixIcon: const Icon(
                     Icons.lock,
                     color: Colors.deepPurpleAccent,
                   ),
@@ -284,6 +166,62 @@ class PasswordWidget extends StatelessWidget {
   }
 }
 
+class Username extends StatelessWidget {
+  const Username({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(
+            top: 25,
+            left: 29,
+          ),
+          alignment: Alignment.topLeft,
+          child: const Text(
+            'Username',
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+          ),
+        ),
+        SizedBox(
+            child: Container(
+                margin: const EdgeInsets.only(top: 10, left: 5),
+                height: 60,
+                width: 320,
+                alignment: Alignment.centerLeft,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF2D2F41),
+                  borderRadius: BorderRadius.circular(10.0),
+                  boxShadow: [
+                    const BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 6.0,
+                      offset: Offset(4, 4),
+                    ),
+                  ],
+                ),
+                child: TextField(
+                  onChanged: (Username) =>
+                      context.read<SignUpCubit>().nameChanged(Username),
+                  keyboardType: TextInputType.text,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.only(top: 14.0),
+                    prefixIcon: const Icon(
+                      Icons.lock,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    hintText: 'Enter your Username',
+                    hintStyle: TextStyle(color: Colors.white54),
+                  ),
+                ))),
+      ],
+    );
+  }
+}
+
 class RectangleBox extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -294,20 +232,14 @@ class RectangleBox extends CustomPainter {
 
     Path path = Path();
     path.addRRect(RRect.fromRectAndRadius(
-        Rect.fromLTRB(0, 0, size.width, size.height), Radius.circular(16)));
+        Rect.fromLTRB(0, 0, size.width, size.height),
+        const Radius.circular(16)));
     var inlinebrush = Paint()
       ..color = Colors.black
       ..style = PaintingStyle.stroke
       ..strokeWidth = 8.0;
-    // var brush = Paint()..color = Colors.pink;
-    // final angle = -90 * pi / 180;
-
     canvas.drawPath(path, outlinebrush);
-    // canvas.drawRect(shapeBounds, outlinebrush);
     canvas.drawPath(path, inlinebrush);
-    // canvas.drawOval(
-    //     Rect.fromLTRB(0, 0, size.width / 4, size.height / 4), brush);
-    // canvas.rotate(angle);
   }
 
   @override
@@ -317,76 +249,36 @@ class RectangleBox extends CustomPainter {
   }
 }
 
-//Color(0xFF6CA8F1),
 class SignupButton extends StatelessWidget {
   const SignupButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
+      padding: const EdgeInsets.symmetric(vertical: 25.0),
       width: 210,
       height: 100,
-      child: BlocConsumer<SignUpCubit, SignUpState>(
-        listener: (context, state) {
-          // if (state.snackbarmessage != "") {
-          //   final snackbar = SnackBar(content: Text(state.snackbarmessage));
-          //   ScaffoldMessenger.of(context).showSnackBar(snackbar);
-          // }
-        },
+      child: BlocBuilder<SignUpCubit, SignUpState>(
+        buildWhen: (previous, current) => previous.status != current.status,
         builder: (context, state) {
-          return BlocBuilder<SignUpCubit, SignUpState>(
-            buildWhen: (previous, current) => previous.status != current.status,
-            builder: (context, state) {
-              return RaisedButton(
-                padding: EdgeInsets.all(15.0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0)),
-                onPressed: () => {
-                  context.read<SignUpCubit>().signUpWithCredentials(),
-                },
-                color: Colors.blueGrey[900],
-                child: Text(
-                  "SIGN UP",
-                  style: TextStyle(
-                    color: Colors.white,
-                    letterSpacing: 1.5,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-              );
-            },
+          return RaisedButton(
+            padding: const EdgeInsets.all(15.0),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0)),
+            onPressed: () =>
+                context.read<SignUpCubit>().signUpWithCredentials(),
+            color: Colors.blueGrey[900],
+            child: const Text(
+              "SIGN UP",
+              style: const TextStyle(
+                color: Colors.white,
+                letterSpacing: 1.5,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
           );
         },
-      ),
-    );
-  }
-}
-
-class SignUpWithText extends StatelessWidget {
-  const SignUpWithText({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Text(
-            '- OR - ',
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.black,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "Sign up with",
-          )
-        ],
       ),
     );
   }

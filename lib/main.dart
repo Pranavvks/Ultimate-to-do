@@ -17,7 +17,7 @@ void main() async {
       create: (context) => TasksRepository(
         dailyTodoApiDb: DailyTodoApiDb(),
       ),
-      child: MaterialApp(debugShowCheckedModeBanner: false, home: HomePage()),
+      child: MaterialApp(debugShowCheckedModeBanner: false, home: SignUp()),
     ),
   );
 }

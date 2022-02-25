@@ -19,7 +19,7 @@ class _LoginRectangleState extends State<LoginRectangle> {
     return Container(
         padding: EdgeInsets.only(top: 1),
         margin: EdgeInsets.only(left: 15, right: 15, top: 100, bottom: 20),
-        height: 635,
+        height: 585,
         width: 695,
         child: CustomPaint(
           painter: RectangleBox(),
@@ -33,58 +33,9 @@ class _LoginRectangleState extends State<LoginRectangle> {
               ),
               EmailWidget(),
               PasswordWidget(),
-              ForgotPassword(),
+
               // RememberMeCheckBox(),
               LoginButton(),
-              SignInWithText(),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                      child: Container(
-                          height: 25,
-                          width: 25,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey[900],
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                offset: Offset(0, 2),
-                                blurRadius: 6.0,
-                              ),
-                            ],
-                            image: const DecorationImage(
-                                image:
-                                    AssetImage('assets/images/apple_icon.png')),
-                          )),
-                    ),
-                    GestureDetector(
-                      onTap: () =>
-                          context.read<LoginCubit>().signInWithGoogle(),
-                      child: Container(
-                          height: 25,
-                          width: 25,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey[300],
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black26,
-                                offset: Offset(0, 2),
-                                blurRadius: 6.0,
-                              ),
-                            ],
-                            image: const DecorationImage(
-                                image: AssetImage(
-                                    'assets/images/google_icon.png')),
-                          )),
-                    ),
-                  ],
-                ),
-              )
             ],
           ),
         ));
@@ -102,7 +53,7 @@ class EmailWidget extends StatelessWidget {
       children: [
         Container(
           margin: EdgeInsets.only(
-            top: 25,
+            top: 35,
             left: 29,
           ),
           alignment: Alignment.topLeft,
@@ -217,65 +168,6 @@ class PasswordWidget extends StatelessWidget {
   }
 }
 
-class ForgotPassword extends StatelessWidget {
-  const ForgotPassword({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: FlatButton(
-        onPressed: () => print("Forgot password"),
-        child: Text(
-          'Forgot Password ?',
-          style: TextStyle(fontStyle: FontStyle.normal),
-        ),
-      ),
-    );
-  }
-}
-
-class RememberMeCheckBox extends StatefulWidget {
-  const RememberMeCheckBox({Key? key}) : super(key: key);
-
-  @override
-  State<RememberMeCheckBox> createState() => _RememberMeCheckBoxState();
-}
-
-class _RememberMeCheckBoxState extends State<RememberMeCheckBox> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      // alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(left: 12),
-      child: Row(
-        children: <Widget>[
-          Theme(
-            data: ThemeData(
-              unselectedWidgetColor: Colors.red,
-            ),
-            child: Checkbox(
-                value: _rememberme,
-                activeColor: Colors.green,
-                checkColor: Colors.black,
-                onChanged: (value) {
-                  setState(() {
-                    _rememberme = value!;
-                  });
-                }),
-          ),
-          Text("Remember me",
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                color: Colors.black54,
-                fontSize: 16,
-              )),
-        ],
-      ),
-    );
-  }
-}
-
 class RectangleBox extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -341,34 +233,6 @@ class LoginButton extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class SignInWithText extends StatelessWidget {
-  const SignInWithText({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          Text(
-            '- OR - ',
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.black,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "Sign in with",
-          )
-        ],
       ),
     );
   }
